@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.biodex.app.ui.home.HomeFragment"
+        android:label="Home" >
+        <action
+            android:id="@+id/action_home_to_createSighting"
+            app:destination="@id/createSightingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.biodex.app.ui.map.MapFragment"
+        android:label="Map" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.biodex.app.ui.profile.ProfileFragment"
+        android:label="Profile" />
+
+    <fragment
+        android:id="@+id/createSightingFragment"
+        android:name="com.biodex.app.ui.sighting.CreateSightingFragment"
+        android:label="Create Sighting" />
+</navigation>
