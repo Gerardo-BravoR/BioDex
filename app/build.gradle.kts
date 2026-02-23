@@ -58,6 +58,11 @@ dependencies {
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+
+    implementation(libs.androidx.camerax.camera2)
+    implementation(libs.androidx.camerax.lifecycle)
+    implementation(libs.androidx.camerax.view)
+
     kapt(libs.androidx.room.compiler)
 }
 

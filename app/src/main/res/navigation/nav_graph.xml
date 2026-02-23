@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
@@ -27,4 +28,9 @@
         android:id="@+id/createSightingFragment"
         android:name="com.biodex.app.ui.sighting.CreateSightingFragment"
         android:label="Create Sighting" />
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.biodex.app.ui.camera.CameraFragment"
+        android:label="CameraFragment"
+        tools:layout="@layout/fragment_camera" />
 </navigation>

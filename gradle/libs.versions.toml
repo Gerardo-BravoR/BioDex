@@ -22,6 +22,8 @@ moshi = "1.15.1"
 
 room = "2.6.1"
 
+camerax = "1.4.0"
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -58,3 +60,7 @@ moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "mosh
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+androidx-camerax-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax" }
+androidx-camerax-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camerax" }
+androidx-camerax-view = { module = "androidx.camera:camera-view", version.ref = "camerax" }
