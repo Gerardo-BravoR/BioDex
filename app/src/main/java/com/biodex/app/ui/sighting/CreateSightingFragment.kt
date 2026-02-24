@@ -3,6 +3,7 @@ package com.biodex.app.ui.sighting
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isGone
@@ -76,6 +77,12 @@ class CreateSightingFragment :
 
             if (hasPhoto) binding.imgPhoto.setImageURI(state.photoUri)
             else binding.imgPhoto.setImageDrawable(null)
+
+            if (state.saved) {
+                Toast.makeText(requireContext(), "Avistamiento guardado", Toast.LENGTH_SHORT).show()
+                vm.consumeSaved()
+                findNavController().popBackStack() //limpio y vuelvo a home
+            }
         }
     }
 }

@@ -16,9 +16,7 @@ import android.net.Uri
 import kotlinx.coroutines.flow.update
 
 @HiltViewModel
-class CreateSightingViewModel @Inject constructor(
-    private val validateSightingUseCase: ValidateSightingUseCase
-) : ViewModel() {
+class CreateSightingViewModel @Inject constructor(private val validateSightingUseCase: ValidateSightingUseCase) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CreateSightingUiState())
     val uiState: StateFlow<CreateSightingUiState> = _uiState.asStateFlow()
@@ -54,10 +52,14 @@ class CreateSightingViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(loading = true, error = null) }
 
-            // Simulación de guardado (luego aquí llamas repo)
+            // Simulación de guardado
             delay(400)
 
             _uiState.update { it.copy(loading = false, saved = true) }
         }
+    }
+
+    fun consumeSaved() {
+        _uiState.update { it.copy(saved = false) }
     }
 }
