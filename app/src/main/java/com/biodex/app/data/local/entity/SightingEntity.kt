@@ -7,5 +7,8 @@ import androidx.room.PrimaryKey
 data class SightingEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val speciesName: String,
-    val notes: String?
+    val notes: String?,
+    val latitude: Double?,
+    val longitude: Double?,
+    val address: String?
 )

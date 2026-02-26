@@ -26,6 +26,10 @@ class SightingAdapter : ListAdapter<Sighting, SightingAdapter.VH>(Diff) {
         fun bind(item: Sighting) {
             binding.tvSpecies.text = item.speciesName
             binding.tvNotes.text = item.notes ?: "—"
+            binding.tvLocation.text =
+                if (!item.address.isNullOrBlank()) "🚩${item.address}"
+                else if (item.latitude != null) "🚩Ubicación guardada"
+                else "🚩Sin ubicación"
         }
     }
 }

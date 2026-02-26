@@ -14,5 +14,5 @@ interface SightingDao {
     fun observeAll(): Flow<List<SightingEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: SightingEntity)
+    suspend fun insert(entity: SightingEntity): Long
 }

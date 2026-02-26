@@ -63,6 +63,8 @@ dependencies {
     implementation(libs.androidx.camerax.lifecycle)
     implementation(libs.androidx.camerax.view)
 
+    implementation(libs.play.services.location)
+
     kapt(libs.androidx.room.compiler)
 }
 

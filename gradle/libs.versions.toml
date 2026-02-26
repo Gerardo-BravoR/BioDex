@@ -24,6 +24,8 @@ room = "2.6.1"
 
 camerax = "1.4.0"
 
+playServicesLocation = "21.3.0"
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -64,3 +66,5 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-camerax-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax" }
 androidx-camerax-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camerax" }
 androidx-camerax-view = { module = "androidx.camera:camera-view", version.ref = "camerax" }
+
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }

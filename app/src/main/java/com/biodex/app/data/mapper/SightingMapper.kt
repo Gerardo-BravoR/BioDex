@@ -9,13 +9,19 @@ object SightingMapper {
         Sighting(
             id = entity.id,
             speciesName = entity.speciesName,
-            notes = entity.notes
+            notes = entity.notes,
+            latitude = entity.latitude,
+            longitude = entity.longitude,
+            address = entity.address
         )
 
     fun toEntity(domain: Sighting): SightingEntity =
         SightingEntity(
             id = domain.id,
             speciesName = domain.speciesName,
-            notes = domain.notes
+            notes = domain.notes,
+            latitude = domain.latitude,
+            longitude = domain.longitude,
+            address = domain.address
         )
 }
