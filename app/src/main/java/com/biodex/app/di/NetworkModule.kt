@@ -1,5 +1,6 @@
 package com.biodex.app.di
 
+import com.biodex.app.data.remote.api.BioDexApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "https://example.com/" // falsa por ahora
+    private const val BASE_URL = "https://69b8b7ade69653ffe6a543b5.mockapi.io/api/v1/" // URL de la API
 
     @Provides
     @Singleton
@@ -44,4 +45,8 @@ object NetworkModule {
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
+    @Provides
+    @Singleton
+    fun provideBioDexApiService(retrofit: Retrofit): BioDexApiService =
+        retrofit.create(BioDexApiService::class.java)
 }
