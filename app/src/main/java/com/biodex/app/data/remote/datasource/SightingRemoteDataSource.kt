@@ -2,13 +2,14 @@ package com.biodex.app.data.remote.datasource
 
 import com.biodex.app.data.remote.api.BioDexApiService
 import com.biodex.app.data.remote.dto.SightingDto
+import com.biodex.app.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SightingRemoteDataSource @Inject constructor(
     private val api: BioDexApiService,
-    private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
     suspend fun getSightings(): List<SightingDto> =

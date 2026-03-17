@@ -45,6 +45,7 @@ object NetworkModule {
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
+
     @Provides
     @Singleton
     fun provideBioDexApiService(retrofit: Retrofit): BioDexApiService =
