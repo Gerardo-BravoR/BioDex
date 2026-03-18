@@ -13,7 +13,8 @@ object SightingMapper {
             notes = entity.notes,
             latitude = entity.latitude,
             longitude = entity.longitude,
-            address = entity.address
+            address = entity.address,
+            isSynced = entity.isSynced
         )
 
     fun toEntity(domain: Sighting): SightingEntity =
@@ -23,7 +24,8 @@ object SightingMapper {
             notes = domain.notes,
             latitude = domain.latitude,
             longitude = domain.longitude,
-            address = domain.address
+            address = domain.address,
+            isSynced = domain.isSynced
         )
 
     fun dtoToDomain(dto: SightingDto): Sighting =
@@ -33,7 +35,8 @@ object SightingMapper {
             notes = dto.notes,
             latitude = dto.latitude,
             longitude = dto.longitude,
-            address = dto.address
+            address = dto.address,
+            isSynced = true
         )
 
     fun domainToDto(domain: Sighting): SightingDto =

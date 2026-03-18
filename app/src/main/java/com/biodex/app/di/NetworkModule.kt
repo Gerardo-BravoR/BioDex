@@ -12,6 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
+import com.biodex.app.data.remote.interceptor.ErrorInterceptor
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,11 +29,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttp(): OkHttpClient {
+    fun provideOkHttp(errorInterceptor: ErrorInterceptor): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BASIC
         }
+
         return OkHttpClient.Builder()
+            .addInterceptor(errorInterceptor)
             .addInterceptor(logging)
             .build()
     }

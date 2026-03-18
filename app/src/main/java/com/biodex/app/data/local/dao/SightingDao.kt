@@ -13,6 +13,12 @@ interface SightingDao {
     @Query("SELECT * FROM sightings ORDER BY id DESC")
     fun observeAll(): Flow<List<SightingEntity>>
 
+    @Query("SELECT * FROM sightings WHERE isSynced = 0 ORDER BY id ASC")
+    suspend fun getPendingSyncSightings(): List<SightingEntity>
+
+    @Query("UPDATE sightings SET isSynced = 1 WHERE id = :id")
+    suspend fun markAsSynced(id: Long)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: SightingEntity): Long
 

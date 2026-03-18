@@ -1,10 +1,16 @@
 package com.biodex.app.data.repository
 
+import androidx.work.Constraints
+import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.biodex.app.data.local.dao.SightingDao
 import com.biodex.app.data.mapper.SightingMapper
 import com.biodex.app.data.remote.datasource.SightingRemoteDataSource
 import com.biodex.app.domain.model.Sighting
 import com.biodex.app.domain.repository.SightingRepository
+import com.biodex.app.work.SightingSyncWorker.SightingSyncWorker
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
@@ -12,7 +18,8 @@ import javax.inject.Inject
 
 class SightingRepositoryImpl @Inject constructor(
     private val dao: SightingDao,
-    private val remoteDataSource: SightingRemoteDataSource
+    private val remoteDataSource: SightingRemoteDataSource,
+    private val workManager: WorkManager
 ) : SightingRepository {
 
     override fun observeSightings(): Flow<List<Sighting>> =
@@ -24,9 +31,19 @@ class SightingRepositoryImpl @Inject constructor(
         try {
             val remoteDto = SightingMapper.domainToDto(sighting)
             val createdRemote = remoteDataSource.createSighting(remoteDto)
-            dao.insert(SightingMapper.toEntity(SightingMapper.dtoToDomain(createdRemote)))
+            dao.insert(
+                SightingMapper.toEntity(
+                    SightingMapper.dtoToDomain(createdRemote).copy(isSynced = true)
+                )
+            )
         } catch (_: Exception) {
-            dao.insert(SightingMapper.toEntity(sighting))
+            dao.insert(
+                SightingMapper.toEntity(
+                    sighting.copy(isSynced = false)
+                )
+            )
+            enqueueSyncWork()
+            throw Exception("No se pudo sincronizar con MockAPI. Se guardó localmente.")
         }
     }
 
@@ -41,5 +58,21 @@ class SightingRepositoryImpl @Inject constructor(
         } catch (_: Exception) {
             // Nada por ahora
         }
+    }
+
+    private fun enqueueSyncWork() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val request = OneTimeWorkRequestBuilder<SightingSyncWorker>()
+            .setConstraints(constraints)
+            .build()
+
+        workManager.enqueueUniqueWork(
+            "sighting_sync",
+            ExistingWorkPolicy.KEEP,
+            request
+        )
     }
 }

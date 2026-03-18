@@ -28,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.google.android.material.snackbar.Snackbar
 
 @AndroidEntryPoint
 class CreateSightingFragment :
@@ -111,6 +112,14 @@ class CreateSightingFragment :
 
             binding.tvLocationStatus.isGone = hasCoords || state.error != null
             binding.tvLocationStatus.text = "Obteniendo ubicación…"
+
+            binding.progressCreateSighting.visibility =
+                if (state.loading) View.VISIBLE else View.GONE
+
+            if (!state.error.isNullOrBlank()) {
+                Snackbar.make(binding.root, state.error, Snackbar.LENGTH_LONG).show()
+                vm.consumeError()
+            }
 
             if (hasCoords) {
                 binding.tvAddress.isGone = state.address.isNullOrBlank()

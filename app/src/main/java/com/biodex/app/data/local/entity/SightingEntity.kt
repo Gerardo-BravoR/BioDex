@@ -10,5 +10,6 @@ data class SightingEntity(
     val notes: String?,
     val latitude: Double?,
     val longitude: Double?,
-    val address: String?
+    val address: String?,
+    val isSynced: Boolean = true
 )

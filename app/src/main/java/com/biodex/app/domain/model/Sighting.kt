@@ -6,5 +6,6 @@ data class Sighting(
     val notes: String? = null,
     val latitude: Double? = null,
     val longitude: Double? = null,
-    val address: String? = null
+    val address: String? = null,
+    val isSynced: Boolean = true
 )

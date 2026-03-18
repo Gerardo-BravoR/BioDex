@@ -92,4 +92,8 @@ class CreateSightingViewModel @Inject constructor(private val validateSightingUs
         val hasCoords = s.latitude != null && s.longitude != null
         return hasPhoto && hasCoords
     }
+
+    fun consumeError() {
+        _uiState.update { it.copy(error = null) }
+    }
 }
