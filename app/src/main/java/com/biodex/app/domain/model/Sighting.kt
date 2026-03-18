@@ -1,7 +1,8 @@
 package com.biodex.app.domain.model
 
 data class Sighting(
-    val id: Long = 0,
+    val localId: Long = 0,
+    val remoteId: String? = null,
     val speciesName: String,
     val notes: String? = null,
     val latitude: Double? = null,

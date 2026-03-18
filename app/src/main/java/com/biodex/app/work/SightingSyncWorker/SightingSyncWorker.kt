@@ -24,8 +24,12 @@ class SightingSyncWorker @AssistedInject constructor(
 
             pending.forEach { entity ->
                 val dto = SightingMapper.domainToDto(SightingMapper.toDomain(entity))
-                remoteDataSource.createSighting(dto)
-                dao.markAsSynced(entity.id)
+                val createdRemote = remoteDataSource.createSighting(dto)
+
+                dao.markAsSynced(
+                    localId = entity.localId,
+                    remoteId = createdRemote.id ?: ""
+                )
             }
 
             Result.success()

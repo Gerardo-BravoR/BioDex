@@ -11,12 +11,24 @@ import com.biodex.app.domain.model.Sighting
 class SightingAdapter : ListAdapter<Sighting, SightingAdapter.VH>(Diff) {
 
     object Diff : DiffUtil.ItemCallback<Sighting>() {
-        override fun areItemsTheSame(oldItem: Sighting, newItem: Sighting) = oldItem.id == newItem.id
-        override fun areContentsTheSame(oldItem: Sighting, newItem: Sighting) = oldItem == newItem
+        override fun areItemsTheSame(oldItem: Sighting, newItem: Sighting): Boolean =
+            when {
+                oldItem.remoteId != null && newItem.remoteId != null ->
+                    oldItem.remoteId == newItem.remoteId
+                else ->
+                    oldItem.localId == newItem.localId
+            }
+
+        override fun areContentsTheSame(oldItem: Sighting, newItem: Sighting): Boolean =
+            oldItem == newItem
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val binding = ItemSightingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemSightingBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return VH(binding)
     }
 

@@ -31,19 +31,23 @@ class SightingRepositoryImpl @Inject constructor(
         try {
             val remoteDto = SightingMapper.domainToDto(sighting)
             val createdRemote = remoteDataSource.createSighting(remoteDto)
+
             dao.insert(
                 SightingMapper.toEntity(
-                    SightingMapper.dtoToDomain(createdRemote).copy(isSynced = true)
+                    SightingMapper.dtoToDomain(createdRemote)
                 )
             )
         } catch (_: Exception) {
             dao.insert(
                 SightingMapper.toEntity(
-                    sighting.copy(isSynced = false)
+                    sighting.copy(
+                        localId = 0L,
+                        remoteId = null,
+                        isSynced = false
+                    )
                 )
             )
             enqueueSyncWork()
-            throw Exception("No se pudo sincronizar con MockAPI. Se guardó localmente.")
         }
     }
 

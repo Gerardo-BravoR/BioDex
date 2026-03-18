@@ -7,7 +7,8 @@ import com.biodex.app.data.local.entity.SightingEntity
 
 @Database(
     entities = [SightingEntity::class],
-    version = 3
+    version = 6,
+    exportSchema = false
 )
 abstract class BioDexDatabase : RoomDatabase() {
     abstract fun sightingDao(): SightingDao

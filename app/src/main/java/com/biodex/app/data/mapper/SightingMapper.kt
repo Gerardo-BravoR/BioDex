@@ -8,7 +8,8 @@ object SightingMapper {
 
     fun toDomain(entity: SightingEntity): Sighting =
         Sighting(
-            id = entity.id,
+            localId = entity.localId,
+            remoteId = entity.remoteId,
             speciesName = entity.speciesName,
             notes = entity.notes,
             latitude = entity.latitude,
@@ -19,7 +20,8 @@ object SightingMapper {
 
     fun toEntity(domain: Sighting): SightingEntity =
         SightingEntity(
-            id = domain.id,
+            localId = domain.localId,
+            remoteId = domain.remoteId,
             speciesName = domain.speciesName,
             notes = domain.notes,
             latitude = domain.latitude,
@@ -30,7 +32,8 @@ object SightingMapper {
 
     fun dtoToDomain(dto: SightingDto): Sighting =
         Sighting(
-            id = dto.id?.toLongOrNull() ?: 0L,
+            localId = 0L,
+            remoteId = dto.id,
             speciesName = dto.speciesName,
             notes = dto.notes,
             latitude = dto.latitude,
@@ -41,7 +44,7 @@ object SightingMapper {
 
     fun domainToDto(domain: Sighting): SightingDto =
         SightingDto(
-            id = if (domain.id == 0L) null else domain.id.toString(),
+            id = domain.remoteId,
             speciesName = domain.speciesName,
             notes = domain.notes,
             latitude = domain.latitude,
