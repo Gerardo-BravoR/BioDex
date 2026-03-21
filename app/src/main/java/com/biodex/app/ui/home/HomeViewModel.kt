@@ -28,4 +28,16 @@ class HomeViewModel @Inject constructor(
                 .collect { }
         }
     }
+
+    fun syncPendingSightings() {
+        viewModelScope.launch {
+            try {
+                repo.syncPendingSightings()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(
+                    error = e.message ?: "Error al sincronizar pendientes"
+                )
+            }
+        }
+    }
 }

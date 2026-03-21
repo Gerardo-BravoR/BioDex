@@ -79,4 +79,22 @@ class SightingRepositoryImpl @Inject constructor(
             request
         )
     }
+
+    override suspend fun syncPendingSightings() {
+        val pending = dao.getPendingSyncSightings()
+
+        pending.forEach { entity ->
+            try {
+                val dto = SightingMapper.domainToDto(SightingMapper.toDomain(entity))
+                val createdRemote = remoteDataSource.createSighting(dto)
+
+                dao.markAsSynced(
+                    localId = entity.localId,
+                    remoteId = createdRemote.id ?: ""
+                )
+            } catch (_: Exception) {
+                // seguimos con el resto; no detenemos todo por uno
+            }
+        }
+    }
 }

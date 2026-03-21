@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface SightingRepository {
     fun observeSightings(): Flow<List<Sighting>>
     suspend fun createSighting(sighting: Sighting)
+    suspend fun syncPendingSightings()
 }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.biodex.app.databinding.ItemSightingBinding
 import com.biodex.app.domain.model.Sighting
 
-class SightingAdapter : ListAdapter<Sighting, SightingAdapter.VH>(Diff) {
+class SightingAdapter(private val onItemClick: (Sighting) -> Unit) : ListAdapter<Sighting, SightingAdapter.VH>(Diff) {
 
     object Diff : DiffUtil.ItemCallback<Sighting>() {
         override fun areItemsTheSame(oldItem: Sighting, newItem: Sighting): Boolean =
@@ -29,12 +29,12 @@ class SightingAdapter : ListAdapter<Sighting, SightingAdapter.VH>(Diff) {
             parent,
             false
         )
-        return VH(binding)
+        return VH(binding, onItemClick)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) = holder.bind(getItem(position))
 
-    class VH(private val binding: ItemSightingBinding) : RecyclerView.ViewHolder(binding.root) {
+    class VH(private val binding: ItemSightingBinding, private val onItemClick: (Sighting) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Sighting) {
             binding.tvSpecies.text = item.speciesName
             binding.tvNotes.text = item.notes ?: "—"
@@ -42,6 +42,10 @@ class SightingAdapter : ListAdapter<Sighting, SightingAdapter.VH>(Diff) {
                 if (!item.address.isNullOrBlank()) "🚩${item.address}"
                 else if (item.latitude != null) "🚩Ubicación guardada"
                 else "🚩Sin ubicación"
+
+            binding.root.setOnClickListener {
+                onItemClick(item)
+            }
         }
     }
 }
